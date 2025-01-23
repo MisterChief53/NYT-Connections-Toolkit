@@ -1,0 +1,42 @@
+{
+    "oneTry":[
+        {
+            "PromptingMethod": "IO",
+            "messages": [
+                {"role": "user", "content": "KIND, DRIFT, TENDER, NICE, IDEA, WING SORT, RING, TYPE, STICK, STYLE, SWEET, MESSAGE, SICK, COOL, POINT"},
+                {"role": "assistant", "content": "[\n\t[COOL, NICE, SICK, SWEET],\n\t[KIND, SORT, STYLE, TYPE],\n\t[DRIFT, IDEA, MESSAGE, POINT],\n\t[RING, STICK, TENDER, WING]\n]\nThe first group is \"AWESOME!\", since they are all words related to awesomenes, although they can also describe someone else, it is better to rank them like this. The second group is \"Variety\", the third one is \"GIST\", since the words are related to getting the gist of things, and the last one is \"FRIED APPETIZER, INFORMALLY\", since those words are used to refer to fried foods informally.\n\nUnderstood, now I will only output json."}
+            ],
+            "systemPrompt": "System: We will be playing a game. You will be given a set of 16 words which are related to each other. However, they can be ordered in groups of 4 such that they are most related. I want you to give me these 4 groups in json format like so:\n  [\n    [\"word1\", \"word2\", \"word3\", \"word4\"],\n    [\"word5\", \"word6\", \"word7\", \"word8\"],\n    ...\n  ]\nJust output the json data, nothing else. You will be provided with an example on how to solve it (don't worry about their json format), your response should be pure json like what I told you, just the array. Dont forget to add quotes on each word and never add anything extra other than the json.\n\nAlso no \"game over\" messages. I only need json from you."
+        },
+        {
+            "PromptingMethod": "CoT",
+            "messages": [],
+            "systemPrompt": ""
+        }
+    ],
+    "multipleTries": [
+        {
+            "PromptingMethod": "IO",
+            "messages": [
+                {"role": "user", "content": "KIND, DRIFT, TENDER, NICE, IDEA, WING SORT, RING, TYPE, STICK, STYLE, SWEET, MESSAGE, SICK, COOL, POINT"},
+                {"role": "assistant", "content": "[\n\t[COOL, NICE, SICK, SWEET],\n\t[KIND, SORT, STYLE, TYPE],\n\t[DRIFT, IDEA, MESSAGE, POINT],\n\t[RING, STICK, TENDER, WING]\n]\nThe first group is \"AWESOME!\", since they are all words related to awesomenes, although they can also describe someone else, it is better to rank them like this.\nThe second group is \"Variety\", the third one is \"GIST\", since the words are related to getting the gist of things, and the last one is \"FRIED APPETIZER, INFORMALLY\", since those words are used to refer to fried foods informally.\n\nUnderstood, now I will only output json."}
+            ],
+            "systemPrompt": "We will be playing a game. You will be given a set of 16 words which are related to each other. However, they can be ordered in groups of 4 such that they are most related. I want you to give me these 4 groups.\nOn each of my messages, I will give you the words and you will pick a group of 4 that you think is most related. If you got it right, I will take away those 4 words and now you will only have to decide from the ones left.\nYou are allowed 3 mistakes. Each mistake you make, you will have 1 less mistake and I will tell you. If you have 0 mistakes left, next time you get it wrong, the game is over.\nprint it in a json format like this:\n  {\n    \"group\": [\"word1\", \"word2\", \"word3\", \"word4\"]\n  }\njust output the json data, nothing else. You will be provided with an example on how to solve it (don't worry about their json format). Your response should be pure json like what I told you, just the array. Dont forget to add quotes on each word and never add anything extra other than the json.\nAlso no \"game over\" messages. I only need json from you."
+        },
+        {
+            "PromptingMethod": "CoT",
+            "messages": [
+                {"role": "user", "content": "KIND, DRIFT, TENDER, NICE, IDEA, WING, SORT, RING, TYPE, STICK, STYLE, SWEET, MESSAGE, SICK, COOL, POINT"},
+                {"role": "assistant", "content": "\nI am thinking that COOL and SWEET both refer to tastes. TENDER and WING are also food-related, but STICK looks like it fits better with those two, so I don't think that is a group. NICE and KIND are ways you would describe a person, so those could be related, but then nothing else works for describing a person. However, COOL, NICE, SICK, and SWEET are expressions that are related to awesomeness, so that is my chosen group:\n{\n    \"group\": [\"COOL\", \"NICE\", \"SICK\", \"SWEET\"]\n}"},
+                {"role": "user", "content": "KIND, DRIFT, TENDER, IDEA, WING, SORT, RING, TYPE, STICK, STYLE, MESSAGE, POINT"},
+                {"role": "assistant", "content": "KIND and TENDER are ways to describe a nice person, but there doesn't seem to be more related words. TYPE, MESSAGE and IDEA all relate to communication, but there does not seem to be other related words. However, KIND can also be used to specify the TYPE of something, and their STYLE is something that differentiates a thing from another, same as its STYLE. So, the group is related to the concept \"Variety\":\n{\n    \"group\": [\"KIND\", \"SORT\", \"STYLE\", \"TYPE\"]\n}"},
+                {"role": "user", "content": "DRIFT, TENDER, IDEA, WING, RING, STICK, MESSAGE, POINT"},
+                {"role": "assistant", "content": "IDEA and MESSAGE relate to communication, but there are no other words that are related to communication. However, if we think about them as something related to facts or understanding, POINT and DRIFT can now be related to each other. The other words are more physical, so by process of elimination they do not fit into this group. So:\n{\n    \"group\": [\"DRIFT\", \"IDEA\", \"MESSAGE\", \"POINT\"]\n}"},
+                {"role": "user", "content": "RING, STICK, TENDER, WING"},
+                {"role": "assistant", "content": "There are only 4 words left, so the group is:\n{\n    \"group\": [\"RING\", \"STICK\", \"TENDER\", \"WING\"]\n}"}
+            ],
+            "systemPrompt": "We will be playing a game. You will be given a set of 16 words which are related to each other. However, they can be ordered in groups of 4 such that they are most related. I want you to give me these 4 groups.\nOn each of my messages, I will give you the words and you will pick a group of 4 that you think is most related. If you got it right, I will take away those 4 words and now you will only have to decide from the ones left.\nYou are allowed 3 mistakes. Each mistake you make, you will have 1 less mistake and I will tell you. If you have 0 mistakes left, next time you get it wrong, the game is over.\nprint it in a json format like this:\n{\n    \"group\": [\"word1\", \"word2\", \"word3\", \"word4\"]\n}\nI want you to think about it step-by-step and tell me the chain of thoughts you went through to get there. And at the end, output the json data.\nDon't forget to add quotes to each word in the group array.\nAlso no \"game over\" messages, and it is STRICTLY NECESSARY to put the json at the end. Do not put other characters around the json. Just start the json, end it, and end your output. You *always* have to give a group. You cannot skip your turn."
+        }
+    ]
+}
+

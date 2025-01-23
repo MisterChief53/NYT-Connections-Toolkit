@@ -1,0 +1,103 @@
+# Most of these ignore rules are here for user convenience.
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Poetry virtual environment (if stored in the project directory)
+.venv/
+
+# Distribution / packaging
+.Python
+build/
+dist/
+*.egg-info/
+*.egg
+*.manifest
+*.spec
+
+# Pytest cache files
+.cache/
+.pytest_cache/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+.env.*
+
+# Logs and debugging files
+*.log
+*.debug
+debugpy.log
+
+# Generated files from matplotlib, Seaborn, or other visualization libraries
+*.svg
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Outputs from Replicate (if any outputs are stored locally)
+outputs/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# macOS specific files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows specific files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Python profiler output
+*.prof
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+
+# Testing output
+.tox/
+.nox/
+pytestdebug.log
+
+# Temporary files
+*.bak
+*.swp
+*.tmp
+*.temp
+*.~*
+
+# Statsmodels cache
+.statsmodels_cache/
+
+# Specific tools or custom ignore rules
+.ipynb_checkpoints/
+*.pkl
+*.h5
+*.csv
+*.json
+# But don't ignore prompts.json
+!prompts.json
+
+# Avoid ignoring `.env.sample` or other template files
+!.env.sample
+
+# Ignore everything in thirdParty
+thirdParty/*
