@@ -101,3 +101,7 @@ pytestdebug.log
 
 # Ignore everything in thirdParty
 thirdParty/*
+
+# Ignore specific .txt logging files
+logs.txt
+results.txt

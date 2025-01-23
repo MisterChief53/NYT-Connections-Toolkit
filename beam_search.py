@@ -3,20 +3,11 @@ from itertools import combinations
 import torch
 from sklearn.cluster import KMeans
 from tqdm import tqdm
-import nltk
-from nltk.corpus import wordnet
-
-nltk.download('wordnet')
-
-
 import torch.nn.functional as F
-
 from torch import Tensor
 import torch
 from transformers import AutoTokenizer, AutoModel
-
 import numpy as np
-
 from typing import Set
 
 class Tokenizer:
@@ -88,23 +79,7 @@ class ConnectionsSolver:
         # Variance-based score
         var_score = np.mean(pairwise_sims) / (1 + np.var(pairwise_sims))
 
-        # WordNet-based score
-        #wordnet_score = self.wordnet_similarity(group)
-
-        return 0.4 * cluster_score + 0.3 * min_sim + 0.3 * var_score #+ 0.1 * wordnet_score
-        #return 0.5 * min_sim + 0.5 * var_score
-        #return min_sim
-
-    def wordnet_similarity(self, group):
-        synsets = [wordnet.synsets(word) for word in group]
-        scores = []
-        for i, s1 in enumerate(synsets):
-            for s2 in synsets[i+1:]:
-                if s1 and s2:  # Check if both words have synsets
-                    max_sim = max((ss1.path_similarity(ss2) or 0)
-                                   for ss1 in s1 for ss2 in s2)
-                    scores.append(max_sim)
-        return np.mean(scores) if scores else 0
+        return 0.4 * cluster_score + 0.3 * min_sim + 0.3 * var_score
 
     def calculate_penalty(self, group, other_words):
         group_vec = np.mean([self.word_embeddings[w] for w in group], axis=0)
@@ -134,19 +109,3 @@ class ConnectionsSolver:
                 beam = new_beam[:self.beam_width]
         
         return beam[0][0]
-
-
-# Example usage
-# words = ["QUIET", "MAGIC", "COLD", "SIN", 
-#          "BUG", "BREACH", "EASY", "ENOUGH", 
-#          "SING", "WINDY", "DIVE", "MOTOR", 
-#          "RELAX", "COUGH", "SPOUT", "CHILL"]
-# words = "KIND, DRIFT, TENDER, NICE, IDEA, WING SORT, RING, TYPE, STICK, STYLE, SWEET, MESSAGE, SICK, COOL, POINT"
-
-# # # tokenizer experiments
-# # # tokenizer = Tokenizer()
-# # # print(tokenizer.get_embeddings(words))
-
-# solver = ConnectionsSolver(words)
-# solution = solver.solve([])
-# print(solution)
